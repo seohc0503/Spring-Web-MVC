@@ -10,7 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-// 회원 등록 HTML Form (단순하게 회원 정보를 입력할 수 있는 HTML Form 을 만들서 응답)
+// 서블릿으로 회원 등록 HTML Form 제공 (단순하게 회원 정보를 입력할 수 있는 HTML Form 을 만들서 응답)
 @WebServlet(name = "memberFormServlet", urlPatterns = "/servlet/members/new-form")
 public class MemberFormServlet extends HttpServlet {
 
