@@ -27,6 +27,8 @@ public class MyView {
         dispatcher.forward(request, response);
     }
 
+    // JSP는 request.getAttribute() 로 데이터를 조회하기 때문에
+    // 모델의 데이터를 꺼내서 request.setAttribute() 로 담아둔다.
     private void modelToRequestAttribute(Map<String, Object> model, HttpServletRequest request) {
         model.forEach((key, value) -> request.setAttribute(key, value));
     }

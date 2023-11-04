@@ -15,9 +15,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-// JSP로 제어를 넘기는 공통 코드를 FrontController 에서 공통으로 처리
-// 각각의 Controller 에서는 viewPath 를 설정한 MyView 객체를 반환함
-// 해당 viewPath 의 JSP 로 MyView 클래스의 render() 메소드가 대신 넘겨줌
 @WebServlet(name = "frontControllerServletV2", urlPatterns = "/front-controller/v2/*")
 public class FrontControllerServletV2 extends HttpServlet {
 
@@ -38,7 +35,8 @@ public class FrontControllerServletV2 extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
-        MyView view = controller.process(request, response);
-        view.render(request, response);
+
+        MyView view = controller.process(request, response);    // 각 ControllerV3 로직 실행
+        view.render(request, response); // 각 ControllerV3에 해당하는 forward()로 각 JSP 로 제어 넘김
     }
 }

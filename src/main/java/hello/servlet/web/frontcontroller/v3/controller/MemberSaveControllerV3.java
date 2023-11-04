@@ -19,8 +19,9 @@ public class MemberSaveControllerV3 implements ControllerV3 {
         Member member = new Member(username, age);
         memberRepository.save(member);
 
-        ModelView mv = new ModelView("save-result");
+        ModelView mv = new ModelView("save-result"); // 논리적 이름
         mv.getModel().put("member", member);
+        // "model"은 단순한 "map"이므로 "model"에 뷰에서 필요한 member 객체를 담고 반환.
 
         return mv;
     }
