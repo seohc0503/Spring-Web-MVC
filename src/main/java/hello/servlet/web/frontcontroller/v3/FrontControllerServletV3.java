@@ -30,35 +30,27 @@ public class FrontControllerServletV3 extends HttpServlet {
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String requestURI = request.getRequestURI();
-
         ControllerV3 controller = controllerMap.get(requestURI);
+
         if (controller == null) {
             response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
-        // "FrontController"에서 "HttpServletRequest"가 제공하는 파라미터들을 "paramMap"에 담아
-        // process()의 매개변수로 각 "Controller"에 보내면서 각 "Controller"를 호출.
-        // process()의 리턴값은 ModelView 객체이다.
         Map<String, String> paramMap = createParamMap(request);
         ModelView mv = controller.process(paramMap);
 
-        // 각 컨트롤러에서 process(paraMap)를 실행하여 전달 받은 "논리적 이름"을 변수(viewName)에 저장
         String viewName = mv.getViewName();
-        // 전달 받은 "논리적 이름"을 "viewResolver()"에 넘겨 "물리적 이름"으로 변환한 MyView 객체 받기
         MyView view = viewResolver(viewName);
-        // 각 "물리적 이름"에 해당하는 MyView 객체를 렌더링(JSP로 넘김)
+
         view.render(mv.getModel(),request, response);
 
     }
 
-    // 논리적 이름 -> 물리적 이름
-    // "물리적 이름"을 "viewPath"로 갖는 MyView 객체를 생성
     private static MyView viewResolver(String viewName) {
         return new MyView("/WEB-INF/views/" + viewName + ".jsp");
     }
 
-    // "HttpServletRequest"를 통해 받은 파라미터들을 Map에 저장.
     private static Map<String, String> createParamMap(HttpServletRequest request) {
         Map<String, String> paramMap = new HashMap<>();
         request.getParameterNames().asIterator()
