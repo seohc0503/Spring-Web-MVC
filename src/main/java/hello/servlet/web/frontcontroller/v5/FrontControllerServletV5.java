@@ -58,6 +58,10 @@ public class FrontControllerServletV5 extends HttpServlet {
         MyHandlerAdapter adapter = getHandlerAdapter(handler);
 
         ModelView mv = adapter.handle(request, response, handler);
+        // -> 각 Controller 에서 process() 실행
+        // Controller 에서 바로 실행 후 반환 받게 되면 형식이 다 다름
+        // Controller 에서 바로 실행하지 않고 매칭된 adapter 에서 process()를 실행한 후 그 값을
+        // 형식에 맞게 변환해서 FrontController 로 반환
 
         String viewName = mv.getViewName();
         MyView view = viewResolver(viewName);
